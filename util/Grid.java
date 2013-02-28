@@ -3,6 +3,14 @@ package util;
 import java.math.BigInteger;
 
 public class Grid {
+	private BigInteger[] array;
+
+	public Grid(int n) {
+		array = new BigInteger[n - 1];
+		for (int i = 0; i < array.length; i++)
+			array[i] = null;
+	}
+
 	/**
 	 * Computes the number of possible ways of going from top left corner to
 	 * bottom right corner by only moving down and right
@@ -10,12 +18,8 @@ public class Grid {
 	 * @param n
 	 *            Represents number of rows and columns of the grid
 	 */
-	public static BigInteger traverse(int n) {
-		return traverse(0, 0, n, n);
-	}
-
-	public static BigInteger traverse(int xMax, int yMax) {
-		return traverse(0, 0, xMax, yMax);
+	public BigInteger traverse(int n) {
+		return traverse(0, 0, n);
 	}
 
 	/**
@@ -24,39 +28,43 @@ public class Grid {
 	 *            Current x coor
 	 * @param y
 	 *            Current y coor
-	 * @param xMax
-	 *            Max x coor
-	 * @param yMax
-	 *            Max y coor
+	 * @param max
+	 *            Max coor
 	 * @return
 	 */
-	public static BigInteger traverse(int x, int y, int xMax, int yMax) {
+	public BigInteger traverse(int x, int y, int max) {
 		// if x is at rightmost, then we have 2 cases:
 		// (1) if y is at bottommost, then we are done
 		// (2) else we can only move down to reach endpoint
 		// if y is at bottommost, we can only move right to reach endpoint
 
-		if (x == xMax)
-			return y == yMax ? BigInteger.ZERO : BigInteger.ONE;
-		else if (y == yMax)
+		if (x == max)
+			return y == max ? BigInteger.ZERO : BigInteger.ONE;
+		else if (y == max)
 			return BigInteger.ONE;
-		else if (x == y)
-			return traverse(x + 1, y, xMax, yMax).multiply(new BigInteger("2"));
-		else
-			return traverse(x + 1, y, xMax, yMax).add(
-					traverse(x, y + 1, xMax, yMax));
+		else if (x == y) {
+			if (x == 0)
+				return traverse(x + 1, y, max).multiply(new BigInteger("2"));
+			else if (array[x - 1] != null)
+				return array[x - 1];
+			else {
+				array[x - 1] = traverse(x + 1, y, max).multiply(
+						new BigInteger("2"));
+				return array[x - 1];
+			}
+		} else
+			return traverse(x + 1, y, max).add(traverse(x, y + 1, max));
 	}
 
 	public static void main(String[] args) {
-		// assert (traverse(2) == 6);
-		for (int i = 18; i <= 18; i++) {
-			long start = System.currentTimeMillis();
-			System.out.println(i + ": " + traverse(i));
-			System.out.println(System.currentTimeMillis() - start);
-		}
+		int x = 20;
 
-		// // example that MxN takes same number of steps as NxM
-		// System.out.println(traverse(5, 3));
-		// System.out.println(traverse(3, 5));
+		String s = x + ": ";
+		Grid g = new Grid(x);
+		long start = System.currentTimeMillis();
+		System.out.println(s + g.traverse(x));
+		System.out.println(System.currentTimeMillis() - start);
+		
+		// Correct answer is: 137846528820
 	}
 }
