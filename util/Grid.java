@@ -1,16 +1,9 @@
 package util;
 
 import java.math.BigInteger;
+import java.util.Hashtable;
 
 public class Grid {
-	private BigInteger[] array;
-
-	public Grid(int n) {
-		array = new BigInteger[n - 1];
-		for (int i = 0; i < array.length; i++)
-			array[i] = null;
-	}
-
 	/**
 	 * Computes the number of possible ways of going from top left corner to
 	 * bottom right corner by only moving down and right
@@ -18,8 +11,9 @@ public class Grid {
 	 * @param n
 	 *            Represents number of rows and columns of the grid
 	 */
-	public BigInteger traverse(int n) {
-		return traverse(0, 0, n);
+	public static BigInteger traverse(int n) {
+		Hashtable<String, BigInteger> database = new Hashtable<String, BigInteger>();
+		return traverse(0, 0, n, database);
 	}
 
 	/**
@@ -32,7 +26,8 @@ public class Grid {
 	 *            Max coor
 	 * @return
 	 */
-	public BigInteger traverse(int x, int y, int max) {
+	public static BigInteger traverse(int x, int y, int max,
+			Hashtable<String, BigInteger> database) {
 		// if x is at rightmost, then we have 2 cases:
 		// (1) if y is at bottommost, then we are done
 		// (2) else we can only move down to reach endpoint
@@ -42,29 +37,24 @@ public class Grid {
 			return y == max ? BigInteger.ZERO : BigInteger.ONE;
 		else if (y == max)
 			return BigInteger.ONE;
-		else if (x == y) {
-			if (x == 0)
-				return traverse(x + 1, y, max).multiply(new BigInteger("2"));
-			else if (array[x - 1] != null)
-				return array[x - 1];
-			else {
-				array[x - 1] = traverse(x + 1, y, max).multiply(
-						new BigInteger("2"));
-				return array[x - 1];
-			}
-		} else
-			return traverse(x + 1, y, max).add(traverse(x, y + 1, max));
+
+		if (database.get(x + " " + y) == null)
+			if (x == y)
+				database.put(x + " " + y, traverse(x + 1, y, max, database)
+						.multiply(new BigInteger("2")));
+			else
+				database.put(x + " " + y, traverse(x + 1, y, max, database)
+						.add(traverse(x, y + 1, max, database)));
+		return database.get(x + " " + y);
 	}
 
 	public static void main(String[] args) {
 		int x = 20;
 
 		String s = x + ": ";
-		Grid g = new Grid(x);
 		long start = System.currentTimeMillis();
-		System.out.println(s + g.traverse(x));
+		System.out.println(s + Grid.traverse(x));
 		System.out.println(System.currentTimeMillis() - start);
-		
 		// Correct answer is: 137846528820
 	}
 }
