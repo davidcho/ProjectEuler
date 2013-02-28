@@ -13,10 +13,20 @@ public class Grid {
 	}
 
 	private static int traverse(int x, int y, int n) {
-		return 0;
+		// if x is at rightmost, then we have 2 cases:
+		// (1) if y is at bottommost, then we are done
+		// (2) else we can only move down to reach endpoint
+		// if y is at bottommost, we can only move right to reach endpoint
+
+		if (x == n)
+			return y == n ? 0 : 1;
+		else if (y == n)
+			return 1;
+		else
+			return traverse(x + 1, y, n) + traverse(x, y + 1, n);
 	}
 
 	public static void main(String[] args) {
-
+		assert (traverse(2) == 6);
 	}
 }
