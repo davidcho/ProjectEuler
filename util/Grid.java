@@ -38,6 +38,8 @@ public class Grid {
 			return y == yMax ? 0 : 1;
 		else if (y == yMax)
 			return 1;
+		else if (x == y)
+			return 2 * traverse(x + 1, y, xMax, yMax);
 		else
 			return traverse(x + 1, y, xMax, yMax)
 					+ traverse(x, y + 1, xMax, yMax);
@@ -45,13 +47,14 @@ public class Grid {
 
 	public static void main(String[] args) {
 		// assert (traverse(2) == 6);
-		// for (int i = 0; i < 20; i++) {
-		// long start = System.currentTimeMillis();
-		// System.out.println(i + ": " + traverse(i));
-		// System.out.println(System.currentTimeMillis() - start);
-		// }
-		
-		System.out.println(traverse(5, 3));
-		System.out.println(traverse(3, 5));
+		for (int i = 20; i <= 20; i++) {
+			long start = System.currentTimeMillis();
+			System.out.println(i + ": " + traverse(i));
+			System.out.println(System.currentTimeMillis() - start);
+		}
+
+		// // example that MxN takes same number of steps as NxM
+		// System.out.println(traverse(5, 3));
+		// System.out.println(traverse(3, 5));
 	}
 }
