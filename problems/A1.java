@@ -3,6 +3,7 @@ package problems;
 import java.math.BigInteger;
 
 import util.Function;
+import util.Grid;
 import util.Palindrone;
 import util.Prime;
 import util.Primitive;
@@ -603,9 +604,8 @@ public class A1 {
 		 * move to the right and down, there are exactly 6 routes to the bottom
 		 * right corner. How many such routes are there through a 20x20 grid?
 		 */
-		
-		
 
+		System.out.println(Grid.traverse(20));
 		System.out.println("\tTime taken: "
 				+ (System.currentTimeMillis() - start));
 	}
