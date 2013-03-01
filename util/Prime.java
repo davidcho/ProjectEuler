@@ -74,6 +74,18 @@ public class Prime {
 	}
 
 	/**
+	 * Sums up all primes below n
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public static BigInteger sum(int n) {
+		// keep track of primes already found, to check if prime: divide by
+		// primes already found up to sqrt
+		return null;
+	}
+
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {

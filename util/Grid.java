@@ -50,10 +50,8 @@ public class Grid {
 
 	public static void main(String[] args) {
 		int x = 20;
-
-		String s = x + ": ";
 		long start = System.currentTimeMillis();
-		System.out.println(s + Grid.traverse(x));
+		System.out.println(x + ": " + Grid.traverse(x));
 		System.out.println(System.currentTimeMillis() - start);
 		// Correct answer is: 137846528820
 	}

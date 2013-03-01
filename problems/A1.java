@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import util.Function;
 import util.Grid;
 import util.Palindrone;
+import util.Power;
 import util.Prime;
 import util.Primitive;
 import util.Pythagorean;
@@ -604,22 +605,27 @@ public class A1 {
 		 * move to the right and down, there are exactly 6 routes to the bottom
 		 * right corner. How many such routes are there through a 20x20 grid?
 		 */
-
-		System.out.println(Grid.traverse(20));
+		System.out.println("15: " + Grid.traverse(20));
 		System.out.println("\tTime taken: "
 				+ (System.currentTimeMillis() - start));
 	}
 
 	static void prob16() {
+		/**
+		 * 2^15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+		 * What is the sum of the digits of the number 2^1000?
+		 */
 		long start = System.currentTimeMillis();
-
+		BigInteger one = new BigInteger("2");
+		BigInteger two = new BigInteger("1000");
+		Power.digitSum(Power.pow(one, two));
 		System.out.println("\tTime taken: "
 				+ (System.currentTimeMillis() - start));
 	}
 
 	static void prob17() {
 		long start = System.currentTimeMillis();
-
+		int[] letters = { 0, 3, 3, 5, 4, 4, 3, 5, 8, 4, 3 };// ten so far
 		System.out.println("\tTime taken: "
 				+ (System.currentTimeMillis() - start));
 	}
@@ -649,21 +655,21 @@ public class A1 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		prob1();
-		prob2();
-		prob3();
-		prob4();
-		prob5();
-		prob6();
-		prob7();
-		prob8();
-		prob9();
-		prob10();
-		prob11();
-		// prob12();
-		prob13();
-		// prob14();
-		prob15();
+		// prob1();
+		// prob2();
+		// prob3();
+		// prob4();
+		// prob5();
+		// prob6();
+		// prob7();
+		// prob8();
+		// prob9();
+		// prob10();
+		// prob11();
+		// // prob12();
+		// prob13();
+		// // prob14();
+		// prob15();
 		prob16();
 		prob17();
 		prob18();
